@@ -1,1 +1,1 @@
-# GoodReads-MeanStackProject
+# MEAN_STACK_GOODREADS
