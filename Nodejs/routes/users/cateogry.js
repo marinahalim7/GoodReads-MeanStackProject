@@ -4,7 +4,7 @@ const categoryModel = require('../../models/category');
 const bookModel = require('../../models/book');
 router.get('/', async (req, res) => {
     try {
-        const cateList = await categoryModel.find();
+        const cateList = await categoryModel.find({},{__v:0});
         res.json(cateList)
     } catch (err) {
         return res.status(500).send(err)
@@ -14,7 +14,7 @@ router.get("/:id", async(req,res)=>
 {
     try {
         const id = req.params.id;
-          categoryList = await bookModel.find({category_id:id},{reviews:0}).populate({
+          categoryList = await bookModel.find({category_id:id},{reviews:0,__v:0}).populate({
             path:"author_id",
             select: {_id:1,first_name:1,last_name:1}
         }).populate({

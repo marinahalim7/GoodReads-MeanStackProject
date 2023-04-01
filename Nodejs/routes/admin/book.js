@@ -2,8 +2,6 @@ const express = require('express');
 const BookModel = require('../../models/book');
 const router = express.Router();
 const upload = require('../../middleware/multer');
-
-
 // get all books
 router.get('/', async(req, res)=>{
     try{
@@ -20,9 +18,7 @@ router.get('/', async(req, res)=>{
      res.status(500).json(err)
     }
     })
-    
 // create book
-
 router.post('/',upload.single('image'), async(req, res)=>{
     if(req.file === undefined){
     try{
@@ -31,8 +27,7 @@ router.post('/',upload.single('image'), async(req, res)=>{
         }
        await BookModel.create(bookBody);
        return res.json(bookBody);
-    }
-        catch(err){
+    }catch(err){
             res.status(500).send(err);
         }}
         else{
@@ -41,6 +36,7 @@ router.post('/',upload.single('image'), async(req, res)=>{
                     ...req.body,
                     img: process.env.IMG_URL+req.file.filename
                      }
+                     console.log(bookBody);
                      await BookModel.create(bookBody);
                      res.json(bookBody);
                 }
@@ -48,9 +44,7 @@ router.post('/',upload.single('image'), async(req, res)=>{
                 res.status(500).send(err);
             }
         }
-
     })
-
 // edit book by id
     router.put("/:id",upload.single('image'),async(req,res)=>{  //test
         const id =req.params.id;
@@ -86,14 +80,9 @@ router.delete('/:id', async(req, res)=>{
             const id = req.params.id;
             const book = await BookModel.findOneAndDelete({_id:id});
             return res.json(book)
-    
         }
         catch(err){
              res.status(500).send(err);
         }
     })
-    
-    
-    
-    
  module.exports = router;

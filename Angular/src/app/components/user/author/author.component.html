@@ -1,1 +1,18 @@
-<p>author works!</p>
+<div class="container">
+    <div class="row">
+        <div *ngFor="let author of authors" class="col-lg-3 col-md-6 col-12">
+            <div class="card text-center my-3" style="width: 15rem;">
+                <img [src]="author.img" class="img-fluid  card-img-top rounded-circle authorimg">
+                <div class="card-body">
+                    <h4>
+                        {{author.first_name}}
+                        {{author.last_name}}
+                    </h4>
+                    <a [routerLink]="['/authordetails',author._id]">
+                        <button class="btn  button">see more</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

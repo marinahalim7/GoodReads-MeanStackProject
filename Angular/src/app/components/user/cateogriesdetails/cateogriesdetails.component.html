@@ -1,0 +1,31 @@
+<div class="container basic-section ">
+    <div class="row">
+        <div class="my-2" id="header">
+            <h1>{{cateogryDetails[0].category_id.name}}</h1>
+        </div>
+        <div class="row">      
+            <div *ngFor="let cateogry of cateogryDetails" class="col-lg-2 col-md-3 my-3">
+                <a [routerLink]='["/bookdetails",cateogry._id]'>
+                    <img [src]="cateogry.img" class="img-fluid">
+                    <h5>{{cateogry.name}}</h5>
+                </a>
+                <a [routerLink]='["/authordetails",cateogry.author_id._id]'>
+                    <h5>
+                        by: {{cateogry.author_id.first_name}}
+                        {{cateogry.author_id.last_name}}
+                    </h5>               
+                </a>    
+                <a [routerLink]='["/bookdetails",cateogry._id]'>
+                    <img [src]="cateogry.img" class="img-fluid">
+                    <h5>{{cateogry.name}}</h5>
+                </a>
+                <a [routerLink]='["/authordetails",cateogry.author_id._id]'>
+                    <h5>
+                        by: {{cateogry.author_id.first_name}}
+                        {{cateogry.author_id.last_name}}
+                    </h5>               
+                </a>            
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+/*img {
+    height: 250px;
+  }
+  
+  .cover {
+    width: 200px;
+    object-fit:fill;
+  }*/
+  img {
+    width: 250px; /* You can set the dimensions to whatever you want */
+    height: 250px;
+    object-fit:fill;
+   // object-position: top;
+    border-radius: 5%;
+   
+ 
+}
+
+a:hover{
+    opacity:.7;
+    color: #311504;
+    font-weight: bolder;
+}

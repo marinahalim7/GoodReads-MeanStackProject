@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const categoryModel = require('../../models/category');
-
 //-------------------------------------------------------get all cat----------------------------
 router.get('/', async (req, res) => {
     try {
@@ -11,19 +10,14 @@ router.get('/', async (req, res) => {
         return res.status(500).send(err)
     }
 })
-
 //-----------------------------------------post--------------------------------
 router.post('/', async (req, res) => {
     try {
-        const category = { 
+        const category = {
             name: req.body.name
          };
-        
-
          await categoryModel.create(category);
         res.json(category);
-        
-
     } catch (err) {
         res.status(500).send(err);
     }
@@ -33,7 +27,7 @@ router.put("/:id", async(req,res)=>
 {
     try {
         const id = req.params.id;
-        const category = { 
+        const category = {
             name: req.body.name
          };
          await categoryModel.findByIdAndUpdate({_id:id},category);

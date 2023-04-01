@@ -1,39 +1,30 @@
 const express = require('express');
 const router = express.Router();
-//const User = require("../../models/User");
 const upload = require('../../middleware/multer');
-
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../../models/User');
 const auth =require('../../middleware/authJWT');
 
-//usersAuth/register
-//end point for register
+
 router.post('/register',upload.single('image'), async(req, res)=>{
     if(req.file == undefined){
     try{
-    // distruct specific attr from body
     const { username, lastname, email, password, img } = req.body;
     
-    // validate user input when you signUp
     if(!(email && password && username && lastname)){
         res.status(400).send(" input is required")
     
     }
-    // check if user already exist
-    // validate if user exist in our database
+ 
     const oldUSer = await UserModel.findOne({ email });
     
     if(oldUSer) {
         
-       return res.send(" User Already Exist, Please Login not register")
+       return res.send(" User Already Exist, Please Login")
     }
 
-    // now, ther in no user so In need to create user
      encryptedPassword = await bcrypt.hash(password, 10);
-
      const newUser = await UserModel.create({
         username,
         lastname,
@@ -41,17 +32,13 @@ router.post('/register',upload.single('image'), async(req, res)=>{
         password: encryptedPassword
          });
 
-    // create token
     const token = jwt.sign(
         {user_id: newUser._id, email},
         process.env.TOKEN_KEY
     );
 
-   // save user token
    newUser.token = token;
-   
-   // return new user
-   res.status(201).json(newUser);
+   res.status(201).send({message:'success'});
    console.log(newUser)
     }
     catch (err){
@@ -59,24 +46,20 @@ router.post('/register',upload.single('image'), async(req, res)=>{
     }}
     else{
         try{
-             // distruct specific attr from body
-    const { username, lastname, email, password, img } = req.body;
+          const { username, lastname, email, password, img } = req.body;
     
-    // validate user input when you signUp
     if(!(email && password && username && lastname)){
         res.status(400).send(" input is required")
     
     }
-    // check if user already exist
-    // validate if user exist in our database
+
     const oldUSer = await UserModel.findOne({ email });
     
     if(oldUSer) {
         
-       return res.send(" User Already Exist, Please Login not register")
+       return res.send(" User Already Exist, Please Login")
     }
 
-    // now, ther in no user so In need to create user
      encryptedPassword = await bcrypt.hash(password, 10);
 
      const newUser = await UserModel.create({
@@ -88,17 +71,14 @@ router.post('/register',upload.single('image'), async(req, res)=>{
 
          });
 
-    // create token
     const token = jwt.sign(
         {user_id: newUser._id, email},
         process.env.TOKEN_KEY
     );
 
-   // save user token
    newUser.token = token;
    
-   // return new user
-   res.status(201).json(newUser);
+   res.status(201).send({message:'success'});
    console.log(newUser)
         }
         catch(err){
@@ -108,9 +88,6 @@ router.post('/register',upload.single('image'), async(req, res)=>{
     }
 })
 
-
-
-// end point for login
 
 router.post('/login', async(req, res)=>{
     try{
@@ -129,14 +106,14 @@ router.post('/login', async(req, res)=>{
         if(user && (await bcrypt.compare(password, user.password))){
             // create token
             const token = jwt.sign(
-                { user_id: user._id, email},
+                { user_id: user._id,username:user.username,lastname:user.lastname,email:user.email},
                 process.env.TOKEN_KEY);
     
                 // save user token
                 user.token = token;
                console.log(token)
                 // user
-                return res.status(200).json(user);
+                return res.status(200).send({message:'success',token:user.token});
         }
         return res.status(400).send(" Invalid Credentials");
     }
@@ -147,15 +124,9 @@ router.post('/login', async(req, res)=>{
     })
     
 
-    // request and route for welcome
 router.use('/welcome', auth, (req, res)=>{
     console.log(req.user)
     res.status(200).send("Welcome");
 });
-
-
-
-
-
 
 module.exports = router;

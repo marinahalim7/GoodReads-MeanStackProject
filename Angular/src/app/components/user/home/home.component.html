@@ -1,1 +1,50 @@
-<p>home works!</p>
+<section>
+    <div class="row">
+        <div class="col-lg-2 my-3 ml-2" id="sideBar">
+            <div class="main-box w-100 my-3">
+                <ul class="menu-list" id="menu_list">
+                    <li>
+                        <button type="button" class="btn btn-transparent"(click)='selectBooks("all")'>
+                            <a class="fw-bold text-body" > All</a>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-transparent" (click)='selectBooks("Read")'>
+                            <a class="fw-bold text-body"> Read</a>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-transparent" (click)='selectBooks("currently Read")'>
+                            <a class="fw-bold text-body"> Currently Read</a>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-transparent" (click)='selectBooks("Want to Read")'>
+                            <a class="fw-bold text-body" > Want to Read</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="container basic-section my-4 "> 
+                <div class="row">
+                    <div *ngFor="let book of books" class="col-lg-2 col-md-3 my-3 col-6 position-relative">
+                        <a [routerLink]='["/bookdetails",book._id]'>
+                            <img [src]="book.bookimg" class="img-fluid rounded ">
+                            <div> {{book.bookname}}</div>
+                        </a>
+                        <a [routerLink]="['/authordetails',book.bookId]">
+                            <span>by:{{book.author_FirstName}}</span>
+                            <span>{{book.author_last_name}}</span>
+                        </a>
+                        <div>Rating :{{book.bookrate}}</div>
+                        <p-rating class=""  [(ngModel)]="book.bookrate"
+                           (ngModelChange)="onRatingChanged($event,book.bookId)"></p-rating>
+                    </div>
+                    
+                </div>
+             </div>
+        </div>
+    </div>
+</section>

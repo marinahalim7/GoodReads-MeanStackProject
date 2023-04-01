@@ -1,1 +1,99 @@
-<p>register works!</p>
+<section class="vh-100 bg-image">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+              <!-- <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <strong class="mx-2">Error!</strong> A problem has been occurred while submitting your data.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+               -->
+              <form [formGroup]="registerForm" (ngSubmit)="onClickSubmit(registerForm)">
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example1cg">First Name</label>
+                  <input formControlName="username" type="text" id="form3Example1cg"
+                    class="form-control form-control-lg" />
+                  <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show my-2"
+                    *ngIf="registerForm.get('username')?.errors !=null && registerForm.get('username')?.touched">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <div class="mx-2 d-flex align-items-center"
+                      *ngIf="registerForm.get('username')?.errors?.['required']">
+                      <span> First Name is required</span>
+                    </div>
+                    <div class="mx-2 d-flex align-items-center"
+                      *ngIf="registerForm.get('username')?.errors?.['minlength']">
+                      <span>Please provide a valid name.</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example3cg"> last Name</label>
+                  <input formControlName="lastname" type="email" id="form3Example3cg"
+                    class="form-control form-control-lg" />
+                  <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show my-2"
+                    *ngIf="registerForm.get('lastname')?.errors !=null && registerForm.get('lastname')?.touched">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <div class="mx-2 d-flex align-items-center"
+                      *ngIf="registerForm.get('lastname')?.errors?.['required']">
+                      <span> Name is required</span>
+                    </div>
+                    <div class="mx-2 d-flex align-items-center"
+                      *ngIf="registerForm.get('lastname')?.errors?.['minlength']">
+                      <span>Name is less 2 letter</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4cg">Email</label>
+                  <input formControlName="email" type="email" id="form3Example4cg"
+                    class="form-control form-control-lg" />
+                  <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show my-2"
+                    *ngIf="registerForm.get('email')?.errors !=null && registerForm.get('email')?.touched">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <div class="mx-2 d-flex align-items-center" *ngIf="registerForm.get('email')?.errors?.['required']">
+                      <span> Email is required</span>
+                    </div>
+                    <div class="mx-2 d-flex align-items-center" *ngIf="registerForm.get('email')?.errors?.['email']">
+                      <span>Please provide a valid email.</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4cg">password</label>
+                  <input formControlName="password" type="password" id="form3Example4cg"
+                    class="form-control form-control-lg" />
+                  <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show my-2"
+                    *ngIf="registerForm.get('password')?.errors !=null && registerForm.get('password')?.touched">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <div class="mx-2 d-flex align-items-center"
+                      *ngIf="registerForm.get('password')?.errors?.['required']">
+                      <span> Password is required</span>
+                    </div>
+                    <div class="mx-2 d-flex align-items-center"
+                      *ngIf="registerForm.get('password')?.errors?.['minlength']">
+                      <span> Please provide a strong password </span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="submit"
+                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                </div>
+                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a routerLink='home'
+                    class="fw-bold text-body"><u>Login here</u></a></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
