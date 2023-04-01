@@ -1,0 +1,467 @@
+<div style="
+background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+<br><br><br><br>
+</div>
+<div class="card">
+    <section class="intro">
+        <div class="bg-image h-100 " style="
+        background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container ">
+                    <div class="row justify-content-center">
+                        <div class="col-12 " >
+                            <div class="card mask-custom" style="box-shadow: 2px 2px 2px #755f3ea5">
+                                <div class="card-body">
+                                    <div class="table-responsive" >
+                                        <p-table #dt [value]="books" [rows]="10" [paginator]="true"
+                                            [globalFilterFields]="[
+                                            'name',
+                                            'country.name',
+                                            'representative.name',
+                                            'status']"
+                                            [tableStyle]="{ 'min-width': '50rem' }"
+                                            [(selection)]="selectedbooks"
+                                            [rowHover]="true"
+                                            dataKey="id"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                            [showCurrentPageReport]="true" class="table table-striped"
+                                            style="background-color: #eed6c4; ">
+                                            <ng-template pTemplate="caption">
+                                                <div class="flex align-items-center justify-content-between "
+                                                    style="background-color: #eed6c437; box-shadow: 6px 6px 20px #69442ba0">
+                                                    <!-- button to add data -->
+                                                    <div class="d-flex justify-content-between">
+                                                        <mat-icon>book</mat-icon>
+                                                        <h4 class="float-none" class="text">Books</h4>
+                                                        <button style="background-color: rgba(120, 90, 72, 0.895)"
+                                                            pButton pRipple icon="pi pi-pencil"
+                                                            class="p-button-rounded mr-2" (click)="openPopup()">
+                                                            Add Book
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+
+
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="name"
+                                                        style="background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        name
+                                                    </th>
+                                                    <th pSortableColumn="name2"
+                                                        style="background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        author_id
+                                                    </th>
+                                                    <th pSortableColumn="price;"
+                                                        style="background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        img
+                                                    </th>
+                                                    <th pSortableColumn="category"
+                                                        style=" background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        category_id
+                                                    </th>
+                                                    <th
+                                                        style=" background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        Operation
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="body" let-book>
+                                                <tr style="background-color: #fff3e4">
+                                                    <td>{{ book.name }}</td>
+                                                    <td>{{ book.author_id }}</td>
+                                                    <td>
+                                                        <img [src]="book.img" [alt]="book.name" width="100"
+                                                            class="shadow-4" />
+                                                    </td>
+                                                    <td>{{ book.category_id }}</td>
+                                                    <td>
+                                                        <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editAuthor(author._id)"></button> -->
+                                                        <button pButton pRipple icon="pi pi-pencil"
+                                                            class="p-button-rounded p-button-success mr-2"
+                                                            (click)="openPopup2(book._id)"></button>
+
+                                                        <!----- button delete author -------------->
+                                                        <button pButton pRipple icon="pi pi-trash"
+                                                            class="p-button-rounded p-button-warning mr-2 ms-2"
+                                                            (click)="deletebook(book._id)"></button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="summary">
+                                                <div class="flex align-items-center justify-content-between">
+                                                    In total there are
+                                                    {{ books ? books.length : 0 }} books.
+                                                </div>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+<p-dialog [(visible)]="bookDialog" [style]="{ width: '450px' }" header="Books Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <img [src]="book.img" [alt]="book.img" class="product-image" *ngIf="book.img" />
+
+        <div class="field">
+            <label for="name">name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="book.name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !book.name">name is required.</small>
+        </div>
+
+        <div class="field">
+            <label for="author_id">author_id</label>
+            <input type="text" pInputText id="author_id" [(ngModel)]="book.author_id" required autofocus />
+            <small class="p-error" *ngIf="submitted && !book.author_id">author_id is required.</small>
+        </div>
+
+        <div class="field">
+            <label for="category_id">category_id</label>
+            <input type="text" pInputText id="category_id" [(ngModel)]="book.category_id" required autofocus />
+            <small class="p-error" *ngIf="submitted && !book.category_id">category_id is required.</small>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+
+
+
+<!-- add book -->
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Add book</h4>
+            </div>
+            <div class="modal-body" style="background-color: #eed6c4;">
+                <div class="w-75 m-auto py-5">
+                    <!-- alert from error response -->
+                    <div *ngIf="error" class="alert alert-primary">
+                        <p>{{ error }}</p>
+                    </div>
+                    <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
+
+                    <form [formGroup]="postBookDataForm" (ngSubmit)="submitpostBookDataForm(postBookDataForm)">
+                        <div class="form-group">
+                            <label for="name" class="popupFont">name</label>
+                            <input formControlName="name" class="form-control" type="text" id="name" />
+                            <div *ngIf="postBookDataForm.get('name')?.errors != null &&
+                            postBookDataForm.get('name')?.touched
+                                "class="alert my-2 alert-danger">
+                                <p *ngIf="postBookDataForm.get('name')?.errors?.['required']">
+                                    name is required
+                                </p>
+                                <p *ngIf="postBookDataForm.get('name')?.errors?.['minlength']">
+                                    name is minlength 3
+                                </p>
+                                <p *ngIf="postBookDataForm.get('name')?.errors?.['maxlength']">
+                                    name is maxlength 20
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <label for="author_id">author_id </label>
+                            <input formControlName="author_id" class="form-control" type="text" id="author_id" />
+                            <div *ngIf="postBookDataForm.get('author_id')?.errors != null &&
+                            postBookDataForm.get('author_id')?.touched
+                                  "class="alert my-2 alert-danger">
+                                <p *ngIf="postBookDataForm.get('author_id')?.errors?.['required']">
+                                    author_id is required
+                            </div>
+                        </div> -->
+
+<!-- logic of add cateogry name and author name -->
+                        <!-- select from author id as name -->
+                        <div class="form-group">
+                        <label for="author_id" class="popupFont mt-2">author_id</label>
+                        <select formControlName="author_id" class="form-control" type="text" id="author_id">
+                            <option *ngFor= "let c of firstNameOfAuthors">
+                                    {{c.Id}} {{c.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="postBookDataForm.get('author_id')?.errors != null &&
+                        postBookDataForm.get('author_id')?.touched
+                              "class="alert my-2 alert-danger">
+                            <p *ngIf="postBookDataForm.get('author_id')?.errors?.['required']">
+                                author_id is required
+                        </div>
+                        </div>
+
+                        <!-- select from cat id as name -->
+                        <div class="form-group">
+                            <label for="category_id" class="popupFont mt-2">category_id</label>
+                            <select formControlName="category_id" class="form-control" type="text" id="category_id">
+                                <option *ngFor= "let c of firstNameOfCateogry">
+                                        {{c.Id}} {{c.name}}
+                                </option>
+                            </select>
+                            <div *ngIf="postBookDataForm.get('category_id')?.errors != null &&
+                            postBookDataForm.get('category_id')?.touched
+                                  "class="alert my-2 alert-danger">
+                                <p *ngIf="postBookDataForm.get('category_id')?.errors?.['required']">
+                                    category_id is required
+                            </div>
+                            </div>
+
+                        <!-- <button (click)="getNameOfAuthors()" class="btn btn-danger">click to show your authors</button> -->
+<!-- ----------------------------------------------------------------- -->
+
+
+                        <!-- <div class="form-group">
+                            <label for="category_id" class="popupFont mt-2">category_id</label>
+                            <input formControlName="category_id" class="form-control" type="text"
+                                id="category_id" />
+                            <div *ngIf="postBookDataForm.get('category_id')?.errors != null &&
+                            postBookDataForm.get('category_id')?.touched
+                                "class="alert my-2 alert-danger">
+                                <p *ngIf="postBookDataForm.get('category_id')?.errors?.['required']">
+                                    category_id is required
+                                </p>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="img" class="popupFont mt-2">img</label>
+                            <input formControlName="img" class="form-control" type="file" id="img" />
+                            <div *ngIf=" postBookDataForm.get('img')?.errors != null &&
+                            postBookDataForm.get('img')?.touched
+                                  "class="alert my-2 alert-danger">
+                                <p *ngIf="postBookDataForm.get('img')?.errors?.['required']">
+                                    img is required
+                                </p>
+                            </div>
+                        </div>
+
+                        <button [disabled]="postBookDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                            post
+                        </button>
+                    </form>
+                </div>
+
+                <br /><br /><br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" (click)="closePopup()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- ========================================================================== -->
+<!-- update book -->
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle2 }">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Update book</h4>
+            </div>
+            <div class="modal-body" style="background-color: #eed6c4;">
+                    <div class="w-75 m-auto py-5">
+                        <!-- alert from error response -->
+                        <div *ngIf="error" class="alert alert-primary">
+                            <p>{{ error }}</p>
+                        </div>
+                        <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
+
+
+                        <form [formGroup]="editBookDataForm" (ngSubmit)="
+                        submiteditBookDataForm(updatedBookId, editBookDataForm)">
+                            <div class="form-group">
+                                <label for="name" class="popupFont">name</label>
+                                <input formControlName="name" class="form-control" type="text" id="name" />
+                                <div *ngIf="editBookDataForm.get('name')?.errors != null && editBookDataForm.get('name')?.touched"class="alert my-2 alert-danger">
+                                    <p *ngIf="editBookDataForm.get('name')?.errors?.['required']">
+                                        name is required
+                                    </p>
+                                    <p *ngIf="editBookDataForm.get('name')?.errors?.['minlength']">
+                                        name is minlength 3
+                                    </p>
+                                    <p *ngIf="editBookDataForm.get('name')?.errors?.['maxlength']">
+                                        name is maxlength 10
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="author_id" class="popupFont mt-2">author_id</label>
+                                <select formControlName="author_id" class="form-control" type="text" id="author_id">
+                                    <option *ngFor= "let c of firstNameOfAuthors">
+                                            {{c.Id}} {{c.name}}
+                                    </option>
+                                </select>
+                                <div *ngIf="editBookDataForm.get('author_id')?.errors != null &&
+                                editBookDataForm.get('author_id')?.touched
+                                      "class="alert my-2 alert-danger">
+                                    <p *ngIf="editBookDataForm.get('author_id')?.errors?.['required']">
+                                        author_id is required
+                                </div>
+                                </div>
+
+
+
+
+                            <div class="form-group">
+                                <label for="category_id" class="popupFont mt-2">category_id</label>
+                                <select formControlName="category_id" class="form-control" type="text" id="category_id">
+                                    <option *ngFor= "let c of firstNameOfCateogry">
+                                            {{c.Id}} {{c.name}}
+                                    </option>
+                                </select>
+                                <div *ngIf="editBookDataForm.get('category_id')?.errors != null &&
+                                editBookDataForm.get('category_id')?.touched
+                                      "class="alert my-2 alert-danger">
+                                    <p *ngIf="editBookDataForm.get('category_id')?.errors?.['required']">
+                                        category_id is required
+                                </div>
+                                </div>
+                            <!-- <div class="form-group">
+                                <label for="author_id" class="popupFont mt-2">author_id</label>
+                                <input formControlName="author_id" class="form-control" type="text" id="author_id" />
+                                <div *ngIf="editBookDataForm.get('author_id')?.errors != null &&
+                                editBookDataForm.get('author_id')?.touched
+                                     "class="alert my-2 alert-danger">
+                                    <p *ngIf="editBookDataForm.get('author_id')?.errors?.['required']">
+                                        author_id is required
+                                    </p>
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="form-group">
+                                <label for="category_id" class="popupFont mt-2">category_id</label>
+                                <input formControlName="category_id" class="form-control" type="text"
+                                    id="category_id" />
+                                <div *ngIf="editBookDataForm.get('category_id')?.errors != null &&
+                                editBookDataForm.get('category_id')?.touched
+                                      "class="alert my-2 alert-danger">
+                                    <p *ngIf="editBookDataForm.get('category_id')?.errors?.['required']">
+                                        category_id is required
+                                    </p>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="img" class="popupFont mt-2">img</label>
+                                <input formControlName="img" class="form-control" type="file" id="img" />
+                                <div *ngIf="editBookDataForm.get('img')?.errors != null &&
+                                editBookDataForm.get('img')?.touched
+                                      "class="alert my-2 alert-danger">
+                                    <p *ngIf="editBookDataForm.get('img')?.errors?.['required']">
+                                        img is required
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button [disabled]="editBookDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                                edit
+                            </button>
+                        </form>
+                    </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" (click)="closePopup2()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+ <!-- <br><br><br>
+
+       <button (click)="getNameOfAuthors()" class="btn btn-danger">click</button>
+    <div style="margin: 5%;">
+        <mat-form-field appearance="fill">
+          <mat-label>authors</mat-label>
+          <mat-select  [(value)]="selected" >
+            <mat-option *ngFor= "let c of firstNameOfAuthors" [value]= "c" >{{c}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <p>
+            Selected Value: {{selected}}
+          </p>
+      </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+    <h1> test </h1>
+        <button (click)="getNameOfAuthors()" class="btn btn-danger">click</button>
+      <li *ngFor="let c of firstNameOfAuthors">
+    {{c}}
+    </li> -->
+
+    <!-- <div style="margin: 5%;">
+        <mat-form-field appearance="fill">
+          <mat-label>authors</mat-label>
+          <mat-select  [(value)]="selected" >
+            <mat-option *ngFor= "let c of firstNameOfAuthors" [value]= "c" >{{c}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <p>
+            Selected Value: {{selected}}
+          </p>
+      </div> -->
+
+
+      <!-- <mat-form-field>
+        <mat-label>Authors</mat-label>
+      
+        <select matNativeControl [(ngModel)]="selected">
+          <option *ngFor="let c of firstNameOfAuthors" [value]="c">{{c}}</option>
+        </select>
+      </mat-form-field>
+      
+      <p>
+        Selected Value: {{selected}}
+      </p> -->
+
+      <!-- <select class="browser-default custom-select">
+        <option selected>Open this select menu of</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>   -->
+

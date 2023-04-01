@@ -1,0 +1,327 @@
+<div style="
+background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+<br><br><br><br>
+</div>
+<div class="card">
+    <section class="intro">
+        <div class="bg-image h-100" style="
+         background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="card mask-custom" style="box-shadow: 2px 2px 2px #755f3ea5">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <p-table #dt [value]="authors" [rows]="10" [paginator]="true"
+                                            [globalFilterFields]="[
+                                            'name',
+                                            'country.name',
+                                            'representative.name',
+                                            'status']" [tableStyle]="{ 'min-width': '50rem' }"
+                                            [(selection)]="selectedauthors" [rowHover]="true" dataKey="id"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                            [showCurrentPageReport]="true" class="table table-striped"
+                                            style="background-color: #eed6c4">
+
+                                            <ng-template pTemplate="caption">
+                                                <div class="flex align-items-center justify-content-between"
+                                                    style="background-color: #eed6c437; box-shadow: 6px 6px 20px #69442ba0">
+                                                    <!-- button to add data -->
+                                                    <div class="d-flex justify-content-between">
+                                                        <mat-icon>group</mat-icon>
+                                                        <h4 class="float-none" class="text">Authors</h4>
+                                                        <button style="background-color: rgba(120, 90, 72, 0.895)"
+                                                            pButton pRipple icon="pi pi-pencil"
+                                                            class="p-button-rounded mr-7" (click)="openPopup()">
+                                                            Add Data
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="name"
+                                                        style="background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        First Name
+                                                    </th>
+                                                    <th pSortableColumn="name2"
+                                                        style="background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        Last Name
+                                                    </th>
+                                                    <th pSortableColumn="price;"
+                                                        style="background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        img
+                                                    </th>
+                                                    <th pSortableColumn="category"
+                                                        style=" background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        Date of Birth
+                                                    </th>
+                                                    <th
+                                                        style=" background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        Operation
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-author>
+                                                <tr style="background-color: #fff3e4">
+                                                    <td>{{ author.first_name }}</td>
+                                                    <td>{{ author.last_name }}</td>
+                                                    <td>
+                                                        <img [src]="author.img" [alt]="author.first_name" width="100"
+                                                            class="shadow-4" />
+                                                    </td>
+
+                                                    <td>{{ author.Date_of_birth | date: 'dd/MM/yyyy' }}</td>
+
+                                                    <!-- button to update and delete -->
+                                                    <td>
+                                                        <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editAuthor(author._id)"></button> -->
+                                                        <button pButton pRipple icon="pi pi-pencil"
+                                                            class="p-button-rounded p-button-success mr-2"
+                                                            (click)="openPopup2(author._id)"></button>
+
+                                                        <!----- button delete author -------------->
+                                                        <button pButton pRipple icon="pi pi-trash"
+                                                            class="p-button-rounded p-button-warning mr-2 ms-2"
+                                                            (click)="deleteAuthor(author._id)"></button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="summary">
+                                                <div class="flex align-items-center justify-content-between">
+                                                    In total there are
+                                                    {{ authors ? authors.length : 0 }} authors.
+                                                </div>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+<p-dialog [(visible)]="authorDialog" [style]="{ width: '450px' }" header="Authour Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <img [src]="author.img" [alt]="author.img" class="product-image" *ngIf="author.img" />
+
+        <div class="field">
+            <label for="name">first name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="author.first_name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !author.first_name">first name is required.</small>
+        </div>
+
+        <div class="field">
+            <label for="name">last name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="author.last_name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !author.last_name">second name is required.</small>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+
+
+
+<!-- add author -->
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-header" >
+                <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Add author</h4>
+            </div>
+            <div class="modal-body" style="background-color: #eed6c4;">
+                <div class="w-75 m-auto py-5">
+                    <!-- alert from error response -->
+                    <div *ngIf="error" class="alert alert-primary">
+                        <p>{{ error }}</p>
+                    </div>
+                    <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
+
+                    <form [formGroup]="postAuthorDataForm" (ngSubmit)="submitpostAuthorDataForm(postAuthorDataForm)">
+                        <div class="form-group">
+                            <label for="first_name" class="popupFont">First Name</label>
+                            <input formControlName="first_name" class="form-control" type="text" id="first_name" />
+                            <div *ngIf="postAuthorDataForm.get('first_name')?.errors != null &&
+                                postAuthorDataForm.get('first_name')?.touched
+                                " class="alert my-2 alert-danger">
+                                <p *ngIf="postAuthorDataForm.get('first_name')?.errors?.['required']">
+                                    first_name is required
+                                </p>
+                                <p *ngIf="postAuthorDataForm.get('first_name')?.errors?.['minlength']">
+                                    first_name is minlength 3
+                                </p>
+                                <p *ngIf="postAuthorDataForm.get('first_name')?.errors?.['maxlength']">
+                                    first_name is maxlength 10
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="last_name" class="popupFont mt-2">Last Name</label>
+                            <input formControlName="last_name" class="form-control" type="text" id="last_name" />
+                            <div *ngIf="postAuthorDataForm.get('last_name')?.errors != null &&
+                                  postAuthorDataForm.get('last_name')?.touched
+                                  " class="alert my-2 alert-danger">
+                                <p *ngIf="postAuthorDataForm.get('last_name')?.errors?.['required']">
+                                    last_name is required
+                                </p>
+                                <p *ngIf="postAuthorDataForm.get('last_name')?.errors?.['minlength']">
+                                    last_name is minlength 3
+                                </p>
+                                <p *ngIf="postAuthorDataForm.get('last_name')?.errors?.['maxlength']">
+                                    last_name is maxLength 10
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Date_of_birth" class="popupFont mt-2">Date_of_birth</label>
+                            <input formControlName="Date_of_birth" class="form-control" type="date"
+                                id="Date_of_birth" />
+                            <div *ngIf="postAuthorDataForm.get('Date_of_birth')?.errors != null &&
+                                postAuthorDataForm.get('Date_of_birth')?.touched
+                                "class="alert my-2 alert-danger">
+                                <p *ngIf="postAuthorDataForm.get('Date_of_birth')?.errors?.['required']">
+                                    Date_of_birth is required
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="img" class="popupFont mt-2">img</label>
+                            <input formControlName="img" class="form-control" type="url" id="img" />
+                            <div *ngIf=" postAuthorDataForm.get('img')?.errors != null &&
+                                  postAuthorDataForm.get('img')?.touched
+                                  "class="alert my-2 alert-danger">
+                                <p *ngIf="postAuthorDataForm.get('img')?.errors?.['required']">
+                                    img is required
+                                </p>
+                            </div>
+                        </div>
+
+                        <button [disabled] ="postAuthorDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                           post
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" (click)="closePopup()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- ========================================================================== -->
+<!-- update author -->
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle2 }">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Update author</h4>
+            </div>
+            <div class="modal-body" style="background-color: #eed6c4;">
+                    <div class="w-75 m-auto py-5">
+                        <!-- alert from error response -->
+                        <div *ngIf="error" class="alert alert-primary">
+                            <p>{{ error }}</p>
+                        </div>
+
+                        <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
+
+                        <form [formGroup]="editAuthorDataForm" (ngSubmit)="
+                              submiteditAuthorDataForm(updatedAuthorId, editAuthorDataForm)">
+                            <div class="form-group">
+                                <label for="first_name" class="popupFont">First Name</label>
+                                <input formControlName="first_name" class="form-control" type="text" id="first_name" />
+                                <div *ngIf="editAuthorDataForm.get('first_name')?.errors != null && editAuthorDataForm.get('first_name')?.touched"
+                                    class="alert my-2 alert-danger">
+                                    <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['required']">
+                                        first_name is required
+                                    </p>
+                                    <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['minlength']">
+                                        minlength of first_name equal 3
+                                    </p>
+                                    <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['maxlength']">
+                                        maxlength of first_name equal 3
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="last_name" class="popupFont mt-2">Last Name</label>
+                                <input formControlName="last_name" class="form-control" type="text" id="last_name" />
+                                <div *ngIf="editAuthorDataForm.get('last_name')?.errors != null &&
+                                     editAuthorDataForm.get('last_name')?.touched
+                                     " class="alert my-2 alert-danger">
+                                    <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['required']">
+                                        last_name is required
+                                    </p>
+                                    <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['minlength']">
+                                        last_name is minlength 3
+                                    </p>
+                                    <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['maxlength']">
+                                        last_name is maxLength 10
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Date_of_birth" class="popupFont mt-2">Date_of_birth</label>
+                                <input formControlName="Date_of_birth" class="form-control" type="date"
+                                    id="Date_of_birth" />
+                                <div *ngIf="editAuthorDataForm.get('Date_of_birth')?.errors != null &&
+                                      editAuthorDataForm.get('Date_of_birth')?.touched
+                                      " class="alert my-2 alert-danger">
+                                    <p *ngIf="editAuthorDataForm.get('Date_of_birth')?.errors?.['required']">
+                                        Date_of_birth is required
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="img" class="popupFont mt-2">img</label>
+                                <input formControlName="img" class="form-control" type="file" id="img" />
+                                <div *ngIf="editAuthorDataForm.get('img')?.errors != null &&
+                                      editAuthorDataForm.get('img')?.touched
+                                      " class="alert my-2 alert-danger">
+                                    <p *ngIf="editAuthorDataForm.get('img')?.errors?.['required']">
+                                        img is required
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button [disabled]="editAuthorDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                                edit
+                            </button>
+                        </form>
+                    </div>
+               
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" (click)="closePopup2()">
+                        Close
+                    </button>
+                </div>
+            
+        </div>
+    </div>
+</div>

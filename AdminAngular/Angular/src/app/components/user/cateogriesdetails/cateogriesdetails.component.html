@@ -1,0 +1,21 @@
+<p>cateogriesdetails works!</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>{{cateogryDetails[0].category_id.name}}</h1>
+        </div>
+        <div class="row">
+            <div *ngFor="let cateogry of cateogryDetails" class="col-3">
+                <a [routerLink]='["",cateogry._id]'>
+                    <img [src]="cateogry.img" class="img-fluid">
+                    <h4>{{cateogry.name}}</h4>
+                </a>
+                <a [routerLink]='["/authordetails",cateogry.author_id._id]'>
+                    <span>{{cateogry.author_id.first_name}}</span>
+                    <span>{{cateogry.author_id.last_name}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

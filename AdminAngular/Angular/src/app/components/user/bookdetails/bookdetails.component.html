@@ -1,0 +1,20 @@
+<p>bookdetails works!</p>
+<div class="container">
+    <div class="row">
+        <div *ngFor="let book of bookDetails" class="col-3">
+            <img [src]="book.img" class="img-fluid">
+            <div >{{book.name}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <button class="btn button"(click)="chooseState('Read')">read</button>
+        </div>
+        <div class="col-3">
+            <button class="btn button"(click)="chooseState('Want to Read')">want to read</button>
+        </div>
+        <div class="col-3">
+            <button class="btn button"(click)="chooseState('currently Read')">currently read</button>
+        </div>
+    </div>
+</div>

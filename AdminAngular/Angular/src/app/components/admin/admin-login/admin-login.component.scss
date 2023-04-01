@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Alkatra&family=Arimo:wght@400;600&family=IBM+Plex+Sans+Arabic:wght@600&family=Lobster&display=swap');
+
+
+input[type="email"]:focus{
+    background: rgb(243, 224, 163);
+}
+input[type="password"]:focus{
+    background: rgb(243, 224, 163);
+}
+
+input[type="email"],input[type="password"]:valid {
+    background-color:  #927559;
+    border: rgb(255, 237, 211);
+    outline: solid rgb(97, 85, 5) 2px
+}
+
+#loginButton{
+    background-color: #925d21;
+    border: rgb(121, 78, 0);
+    box-shadow: white;
+    color: aliceblue;
+    height: 50px;
+    width: 80px;
+    
+}
+
+#loginButton:active {
+    background-color: #a3850e;
+    
+}
+
+#loginButton:hover {
+    background-color: #9f7a0b;
+   
+}
+
+.text{
+    color: #f8f6e6;
+    font-size: 25px;
+    font-family: 'Lobster', cursive;
+    text-shadow: 1px 1px rgb(188, 182, 168);
+
+}
+h2{
+    color: #f8f6e6;
+    font-size: 50px;
+    font-family: 'Lobster', cursive;
+    text-shadow: 1px 1px rgb(188, 182, 168);
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #606060;
+  }
+.container{
+    background-color: #89511249;
+    border-radius: 20px;
+}

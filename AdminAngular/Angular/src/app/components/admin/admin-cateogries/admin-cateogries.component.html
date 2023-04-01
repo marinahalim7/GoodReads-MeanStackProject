@@ -1,0 +1,211 @@
+
+<div style="
+background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+<br><br><br><br>
+</div>
+<div class="card">
+    <section class="intro">
+        <div class="bg-image h-100" style="
+         background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="card mask-custom" style="box-shadow: 2px 2px 2px #755f3ea5">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <p-table #dt [value]="cateogries" [rows]="10" [paginator]="true"
+                                            [globalFilterFields]="[
+                                            'name',
+                                            'country.name',
+                                            'representative.name',
+                                            'status']"
+                                            [tableStyle]="{ 'min-width': '50rem' }"
+                                            [(selection)]="selectedcateogries"
+                                            [rowHover]="true"
+                                            dataKey="id"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                            [showCurrentPageReport]="true" class="table table-striped"
+                                            style="background-color: #eed6c4">
+
+                                            <ng-template pTemplate="caption">
+                                                <div class="flex align-items-center justify-content-between"
+                                                    style="background-color: #eed6c437;  box-shadow: 6px 6px 20px #69442ba0">
+                                                    <!-- button to add data -->
+                                                    <div class="d-flex justify-content-between">
+                                                        <mat-icon> category</mat-icon>
+                                                        <h4 class="float-none" class="text">Cateogries</h4>
+                                                        <button style="background-color: rgba(120, 90, 72, 0.895)"
+                                                            pButton pRipple icon="pi pi-pencil"
+                                                            class="p-button-rounded mr-2" (click)="openPopup()">
+                                                            Add Data
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+
+
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="name"
+                                                        style="background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        Name
+                                                    </th>
+                                                    <th
+                                                        style=" background-color: #eed6c4; color:rgba(84, 63, 50, 0.895)">
+                                                        Operation
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="body" let-cateogry>
+                                                <tr style="background-color: #fff3e4">
+                                                        <td>{{ cateogry.name }}</td>
+                                                        <!-- button to update and delete -->
+                                                        <td>
+                                                        <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editAuthor(author._id)"></button> -->
+                                                        <button pButton pRipple icon="pi pi-pencil"
+                                                            class="p-button-rounded p-button-success mr-2"
+                                                            (click)="openPopup2(cateogry._id)"></button>
+
+                                                        <!----- button delete author -------------->
+                                                        <button pButton pRipple icon="pi pi-trash"
+                                                            class="p-button-rounded p-button-warning mr-2 ms-2"
+                                                            (click)="deleteCateogry(cateogry._id)"></button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="summary">
+                                                <div class="flex align-items-center justify-content-between">
+                                                    In total there are
+                                                    {{ cateogries ? cateogries.length : 0 }} cateogries.
+                                                </div>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+<p-dialog [(visible)]="cateogryDialog" [style]="{ width: '450px' }" header="Authour Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name"> name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="cateogry.name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !cateogry.name"> name is required.</small>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+
+
+
+<!-- add acateogry -->
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Add cateogry</h4>
+            </div>
+            <div class="modal-body" style="background-color: #eed6c4;">
+                <div class="w-75 m-auto py-5">
+                    <!-- alert from error response -->
+                    <div *ngIf="error" class="alert alert-primary">
+                        <p>{{ error }}</p>
+                    </div>
+                    <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
+
+                    <form [formGroup]="postCateogryDataForm" (ngSubmit)="submitpostCateogryDataForm(postCateogryDataForm)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input formControlName="name" class="form-control" type="text" id="name" />
+                            <div *ngIf="postCateogryDataForm.get('name')?.errors != null &&
+                            postCateogryDataForm.get('name')?.touched
+                                "class="alert my-2 alert-danger">
+                                <p *ngIf="postCateogryDataForm.get('name')?.errors?.['required']">
+                                    name is required
+                                </p>
+                                <p *ngIf="postCateogryDataForm.get('name')?.errors?.['minlength']">
+                                    name is minlength 3
+                                </p>
+                                <p *ngIf="postCateogryDataForm.get('name')?.errors?.['maxlength']">
+                                    name is maxlength 10
+                                </p>
+                            </div>
+                        </div>
+
+                        <button [disabled]="postCateogryDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                            post
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" (click)="closePopup()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ========================================================================== -->
+<!-- update author -->
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle2 }">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Update cateogry</h4>
+            </div>
+            <div class="modal-body" style="background-color: #eed6c4;">
+                    <div class="w-75 m-auto py-5">
+                        <!-- alert from error response -->
+                        <div *ngIf="error" class="alert alert-primary">
+                            <p>{{ error }}</p>
+                        </div>
+                        <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
+                        <form [formGroup]="editcateogryDataForm" (ngSubmit)="
+                        submiteditCateogryDataForm(updatedCateogryId, editcateogryDataForm)">
+                            <div class="form-group">
+                                <label for="name" class="popupFont"> Name</label>
+                                <input formControlName="name" class="form-control" type="text" id="name" />
+                                <div *ngIf="editcateogryDataForm.get('name')?.errors != null && editcateogryDataForm.get('name')?.touched"class="alert my-2 alert-danger">
+                                    <p *ngIf="editcateogryDataForm.get('name')?.errors?.['required']">
+                                        name is required
+                                    </p>
+                                    <p *ngIf="editcateogryDataForm.get('name')?.errors?.['minlength']">
+                                        name is minlength 3
+                                    </p>
+                                    <p *ngIf="editcateogryDataForm.get('name')?.errors?.['maxlength']">
+                                        name is maxlength 10
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button [disabled]="editcateogryDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                                edit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" (click)="closePopup2()">
+                        Close
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>
+
+

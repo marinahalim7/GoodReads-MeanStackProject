@@ -1,0 +1,23 @@
+<p>authordetails works!</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <img class="img-fluid" [src]="authorDetails.author.img">
+        </div>
+        <div class="col-3">
+            <span>{{authorDetails.author.first_name}}</span>
+            <span>{{authorDetails.author.last_name}}</span>
+            <div>{{authorDetails.author.Date_of_birth}}</div>
+        </div>
+        <h1>Author Books</h1>
+    </div>
+    <div class="row">
+        <div *ngFor="let book of authorDetails.books">
+            <div>{{book.name}}</div>
+            <div class="col-3">
+                <img class="img-fluid" [src]="book.img">
+            </div>
+        </div>
+    </div>
+    </div>
