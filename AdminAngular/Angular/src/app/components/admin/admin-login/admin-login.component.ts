@@ -12,9 +12,6 @@ import { Router } from '@angular/router';
 
 
 export class AdminLoginComponent implements OnInit{
-
- 
-
   constructor(private _LoginadminAuthService: LoginadminAuthService, private _Router:Router){ }
   loginForm = new FormGroup({
   email: new FormControl(null,[Validators.email, Validators.required]),

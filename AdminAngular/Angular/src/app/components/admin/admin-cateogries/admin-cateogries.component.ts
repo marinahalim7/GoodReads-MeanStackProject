@@ -19,7 +19,7 @@ import { Location } from '@angular/common';
       display: block;
   }
 `],
-providers: [MessageService, ConfirmationService]
+  providers: [MessageService, ConfirmationService]
 })
 export class AdminCateogriesComponent implements OnInit {
 
@@ -28,14 +28,14 @@ export class AdminCateogriesComponent implements OnInit {
 
   }
   refresh(): void {
-    this._Router.navigateByUrl("/refresh", { skipLocationChange: true }).then(() => {
+    this._Router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
       console.log(decodeURI(this._location.path()));
 
       (<any>this._Router).navigate([decodeURI(this._location.path())]);
     });
   }
 
-  // logic of post author ////////////////////
+  // post author
   CateogryNames: any[] = [];
   error: string = '';
   postCateogryDataForm = new FormGroup({
@@ -43,14 +43,13 @@ export class AdminCateogriesComponent implements OnInit {
   })
 
 
-  // method to submit postAuthorDataForm
+  //submit postAuthorDataForm
   submitpostCateogryDataForm(postCateogryDataForm: FormGroup) {
     this._AdminCateogriesService.postAdminCateogries(postCateogryDataForm.value)
       .subscribe((response) => {
         if (response.name != null) {
           console.log("post cateogry data success");
           this.refresh();
-          //this._Router.navigate([self]);
         }
         else {
           this.error = response.message;
@@ -58,7 +57,7 @@ export class AdminCateogriesComponent implements OnInit {
       })
   }
 
-    //////////////////////////////////////////////////////////
+
   // method to delete data
   deleteCateogry(id: any) {
 
@@ -75,35 +74,32 @@ export class AdminCateogriesComponent implements OnInit {
     })
   }
 
-
- /////////////////////////////////////////////////////
-  //method to update author
+  // method to update author
   cateogryNamesupdate: any[] = [];
   editcateogryDataForm = new FormGroup({
     name: new FormControl(null, [Validators.minLength(3), Validators.maxLength(10), Validators.required]),
     _id: new FormControl(null)
   })
 
-   // method to submit editAuthorDataForm
- submiteditCateogryDataForm(id:any, editcateogryDataForm: FormGroup) {
+  // method to submit editAuthorDataForm
+  submiteditCateogryDataForm(id: any, editcateogryDataForm: FormGroup) {
 
-  this._AdminCateogriesService.updateAdminCateogries(id,editcateogryDataForm.value)
-    .subscribe((response) => {
-      console.log(id);
-      console.log(editcateogryDataForm);
-      if (response.name != null) {
-        console.log("edit cateogry data success");
-        this.refresh();
-        //this._Router.navigate([self]);
-      }
-      else {
-        this.error = response.message;
-      }
-    })
+    this._AdminCateogriesService.updateAdminCateogries(id, editcateogryDataForm.value)
+      .subscribe((response) => {
+        console.log(id);
+        console.log(editcateogryDataForm);
+        if (response.name != null) {
+          console.log("edit cateogry data success");
+          this.refresh();
+        }
+        else {
+          this.error = response.message;
+        }
+      })
 
-}
+  }
 
-  // logic of get author and it's dilaog message
+  // author and it's dilaog message
   cateogryDialog!: boolean;
   cateogries!: ICateogry[];
   cateogry!: ICateogry;
@@ -178,9 +174,9 @@ export class AdminCateogriesComponent implements OnInit {
     this.displayStyle = "none";
   }
 
-updatedCateogryId!:any;
-// edit popup
-  openPopup2(id:any) {
+  updatedCateogryId!: any;
+  // edit popup
+  openPopup2(id: any) {
     this.displayStyle2 = "block";
     this.updatedCateogryId = id;
   }

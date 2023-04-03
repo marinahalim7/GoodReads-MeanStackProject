@@ -34,7 +34,7 @@ export class AdminAuthorsService {
   }
 
   // update authors
-  updateAdminAuthors(id:any, editAuthorData:IAuthor):Observable<any>{
+  updateAdminAuthors(id:any, editAuthorData:any):Observable<any>{
     console.log(id);
     console.log(editAuthorData);
     return this._HttpClient.put(`http://localhost:5000/admin/author/${id}`,editAuthorData)

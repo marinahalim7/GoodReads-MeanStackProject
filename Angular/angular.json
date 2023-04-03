@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontSide": {
+    "Angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/front-side",
+            "outputPath": "dist/angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -31,16 +31,19 @@
             ],
             "styles": [
               "./node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
+              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/popper.js/dist/umd/popper.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            "./node_modules/jquery/dist/jquery.min.js",
+            "./node_modules/popper.js/dist/umd/popper.min.js",
+            "./node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -74,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "frontSide:build:production"
+              "browserTarget": "Angular:build:production"
             },
             "development": {
-              "browserTarget": "frontSide:build:development"
+              "browserTarget": "Angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -85,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "frontSide:build"
+            "browserTarget": "Angular:build"
           }
         },
         "test": {
@@ -104,13 +107,15 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [ ]
+            
+           
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": "557418f8-b60d-44f8-b697-397aa3d2a250"
+    "analytics": "3fdd37e7-5ed3-4a65-b121-892d557afec2"
   }
 }

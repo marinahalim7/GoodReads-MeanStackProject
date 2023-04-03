@@ -1,7 +1,9 @@
 <div style="
 background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
-<br><br><br><br>
+    <br><br><br><br>
 </div>
+
+<!-- display author -->
 <div class="card">
     <section class="intro">
         <div class="bg-image h-100" style="
@@ -71,10 +73,7 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
                                                         <img [src]="author.img" [alt]="author.first_name" width="100"
                                                             class="shadow-4" />
                                                     </td>
-
                                                     <td>{{ author.Date_of_birth | date: 'dd/MM/yyyy' }}</td>
-
-                                                    <!-- button to update and delete -->
                                                     <td>
                                                         <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editAuthor(author._id)"></button> -->
                                                         <button pButton pRipple icon="pi pi-pencil"
@@ -127,15 +126,12 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
     </ng-template>
 </p-dialog>
 
-
-
-
-
 <!-- add author -->
-<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog"
+    [ngStyle]="{ display: displayStyle }">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" >
-            <div class="modal-header" >
+        <div class="modal-content">
+            <div class="modal-header">
                 <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Add author</h4>
             </div>
             <div class="modal-body" style="background-color: #eed6c4;">
@@ -144,7 +140,6 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
                     <div *ngIf="error" class="alert alert-primary">
                         <p>{{ error }}</p>
                     </div>
-                    <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
 
                     <form [formGroup]="postAuthorDataForm" (ngSubmit)="submitpostAuthorDataForm(postAuthorDataForm)">
                         <div class="form-group">
@@ -189,7 +184,7 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
                                 id="Date_of_birth" />
                             <div *ngIf="postAuthorDataForm.get('Date_of_birth')?.errors != null &&
                                 postAuthorDataForm.get('Date_of_birth')?.touched
-                                "class="alert my-2 alert-danger">
+                                " class="alert my-2 alert-danger">
                                 <p *ngIf="postAuthorDataForm.get('Date_of_birth')?.errors?.['required']">
                                     Date_of_birth is required
                                 </p>
@@ -198,18 +193,19 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
 
                         <div class="form-group">
                             <label for="img" class="popupFont mt-2">img</label>
-                            <input formControlName="img" class="form-control" type="url" id="img" />
-                            <div *ngIf=" postAuthorDataForm.get('img')?.errors != null &&
-                                  postAuthorDataForm.get('img')?.touched
-                                  "class="alert my-2 alert-danger">
-                                <p *ngIf="postAuthorDataForm.get('img')?.errors?.['required']">
+                            <input formControlName="image" class="form-control" (change)="selectImgFun($event)"
+                                type="file" id="img" />
+                            <div *ngIf=" postAuthorDataForm.get('image')?.errors != null &&
+                                  postAuthorDataForm.get('image')?.touched
+                                  " class="alert my-2 alert-danger">
+                                <p *ngIf="postAuthorDataForm.get('image')?.errors?.['required']">
                                     img is required
                                 </p>
                             </div>
                         </div>
 
-                        <button [disabled] ="postAuthorDataForm.invalid" class="btn btn-success mt-3" type="submit">
-                           post
+                        <button [disabled]="postAuthorDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                            post
                         </button>
                     </form>
                 </div>
@@ -223,105 +219,95 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
     </div>
 </div>
 
-
-
-
-
-
-
-
-<!-- ========================================================================== -->
 <!-- update author -->
-<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle2 }">
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog"
+    [ngStyle]="{ display: displayStyle2 }">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Update author</h4>
             </div>
             <div class="modal-body" style="background-color: #eed6c4;">
-                    <div class="w-75 m-auto py-5">
-                        <!-- alert from error response -->
-                        <div *ngIf="error" class="alert alert-primary">
-                            <p>{{ error }}</p>
+                <div class="w-75 m-auto py-5">
+                    <!-- alert from error response -->
+                    <div *ngIf="error" class="alert alert-primary">
+                        <p>{{ error }}</p>
+                    </div>
+
+                    <form [formGroup]="editAuthorDataForm" (ngSubmit)="
+                              submiteditAuthorDataForm(updatedAuthorId, editAuthorDataForm)">
+                        <div class="form-group">
+                            <label for="first_name" class="popupFont">First Name</label>
+                            <input formControlName="first_name" class="form-control" type="text" id="first_name" />
+                            <div *ngIf="editAuthorDataForm.get('first_name')?.errors != null && editAuthorDataForm.get('first_name')?.touched"
+                                class="alert my-2 alert-danger">
+                                <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['required']">
+                                    first_name is required
+                                </p>
+                                <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['minlength']">
+                                    minlength of first_name equal 3
+                                </p>
+                                <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['maxlength']">
+                                    maxlength of first_name equal 3
+                                </p>
+                            </div>
                         </div>
 
-                        <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
-
-                        <form [formGroup]="editAuthorDataForm" (ngSubmit)="
-                              submiteditAuthorDataForm(updatedAuthorId, editAuthorDataForm)">
-                            <div class="form-group">
-                                <label for="first_name" class="popupFont">First Name</label>
-                                <input formControlName="first_name" class="form-control" type="text" id="first_name" />
-                                <div *ngIf="editAuthorDataForm.get('first_name')?.errors != null && editAuthorDataForm.get('first_name')?.touched"
-                                    class="alert my-2 alert-danger">
-                                    <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['required']">
-                                        first_name is required
-                                    </p>
-                                    <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['minlength']">
-                                        minlength of first_name equal 3
-                                    </p>
-                                    <p *ngIf="editAuthorDataForm.get('first_name')?.errors?.['maxlength']">
-                                        maxlength of first_name equal 3
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="last_name" class="popupFont mt-2">Last Name</label>
-                                <input formControlName="last_name" class="form-control" type="text" id="last_name" />
-                                <div *ngIf="editAuthorDataForm.get('last_name')?.errors != null &&
+                        <div class="form-group">
+                            <label for="last_name" class="popupFont mt-2">Last Name</label>
+                            <input formControlName="last_name" class="form-control" type="text" id="last_name" />
+                            <div *ngIf="editAuthorDataForm.get('last_name')?.errors != null &&
                                      editAuthorDataForm.get('last_name')?.touched
                                      " class="alert my-2 alert-danger">
-                                    <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['required']">
-                                        last_name is required
-                                    </p>
-                                    <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['minlength']">
-                                        last_name is minlength 3
-                                    </p>
-                                    <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['maxlength']">
-                                        last_name is maxLength 10
-                                    </p>
-                                </div>
+                                <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['required']">
+                                    last_name is required
+                                </p>
+                                <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['minlength']">
+                                    last_name is minlength 3
+                                </p>
+                                <p *ngIf="editAuthorDataForm.get('last_name')?.errors?.['maxlength']">
+                                    last_name is maxLength 10
+                                </p>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="Date_of_birth" class="popupFont mt-2">Date_of_birth</label>
-                                <input formControlName="Date_of_birth" class="form-control" type="date"
-                                    id="Date_of_birth" />
-                                <div *ngIf="editAuthorDataForm.get('Date_of_birth')?.errors != null &&
+                        <div class="form-group">
+                            <label for="Date_of_birth" class="popupFont mt-2">Date_of_birth</label>
+                            <input formControlName="Date_of_birth" class="form-control" type="date"
+                                id="Date_of_birth" />
+                            <div *ngIf="editAuthorDataForm.get('Date_of_birth')?.errors != null &&
                                       editAuthorDataForm.get('Date_of_birth')?.touched
                                       " class="alert my-2 alert-danger">
-                                    <p *ngIf="editAuthorDataForm.get('Date_of_birth')?.errors?.['required']">
-                                        Date_of_birth is required
-                                    </p>
-                                </div>
+                                <p *ngIf="editAuthorDataForm.get('Date_of_birth')?.errors?.['required']">
+                                    Date_of_birth is required
+                                </p>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="img" class="popupFont mt-2">img</label>
-                                <input formControlName="img" class="form-control" type="file" id="img" />
-                                <div *ngIf="editAuthorDataForm.get('img')?.errors != null &&
-                                      editAuthorDataForm.get('img')?.touched
+                        <div class="form-group">
+                            <label for="img" class="popupFont mt-2">img</label>
+                            <input formControlName="image" class="form-control" (change)="selectImgFunedit($event)"
+                                type="file" id="img" />
+                            <div *ngIf="editAuthorDataForm.get('image')?.errors != null &&
+                                      editAuthorDataForm.get('image')?.touched
                                       " class="alert my-2 alert-danger">
-                                    <p *ngIf="editAuthorDataForm.get('img')?.errors?.['required']">
-                                        img is required
-                                    </p>
-                                </div>
+                                <p *ngIf="editAuthorDataForm.get('image')?.errors?.['required']">
+                                    img is required
+                                </p>
                             </div>
+                        </div>
 
-                            <button [disabled]="editAuthorDataForm.invalid" class="btn btn-success mt-3" type="submit">
-                                edit
-                            </button>
-                        </form>
-                    </div>
-               
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" (click)="closePopup2()">
-                        Close
-                    </button>
+                        <button [disabled]="editAuthorDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                            edit
+                        </button>
+                    </form>
                 </div>
-            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" (click)="closePopup2()">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
 </div>

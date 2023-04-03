@@ -1,0 +1,55 @@
+<div style="
+background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+    <br><br><br><br>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3 my-4" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img [src]="authorDetails.author.img" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"> {{authorDetails.author.first_name}}
+                                {{authorDetails.author.last_name}}</h5>
+                            <p class="card-text"><small
+                                    class="text-muted">{{authorDetails.author.Date_of_birth|date}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngFor="let book of authorDetails.books">
+        <div class="row my-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <img [src]="book.img" class="rounded img-fluid bookimg">
+                        </div>
+                        <div class="col-3">
+                            <h4>{{book.name}}</h4>
+                            <h4>{{book.avg_rate |number:'1.0-1'}} - {{book.count_rate}} ratings</h4>
+                        </div>
+                        <div class="col-3 me-0 offset-xl-3">
+                            <select #state (change)="chooseState(state.value,book._id)" class="form-select me-0">
+                                <option [ngValue]="null" disabled selected>Add book</option>
+                                <option>Read</option>
+                                <option>Want to Read</option>
+                                <option>currently Read</option>
+                            </select>
+                            <div class="stars d-flex justify-content-center">
+                                <p-rating iconCancelClass="pi pi-times" class="custom-rate" [cancel]="true"
+                                    [readonly]="false" (onCancel)="onCancledRating(book._id)"
+                                    (onRate)="chooseRating($event.value,book._id)"></p-rating>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 

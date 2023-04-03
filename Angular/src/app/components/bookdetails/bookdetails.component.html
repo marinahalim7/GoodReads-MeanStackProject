@@ -1,0 +1,59 @@
+<div style="
+background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+    <br><br><br><br>
+</div>
+<div class="container my-4">
+    <div class="row ">
+        <div class="col-4">
+            <div class="col-12">
+                <img [src]="book.img" class="img-fluid ">
+            </div>
+            <div class=" mt-3 col-8 justify-content-center ">
+                <select #state (change)="chooseState(state.value)" class="form-select">
+                    <option [ngValue]="null" disabled selected>Add book</option>
+                    <option>Read</option>
+                    <option>Want to Read</option>
+                    <option>currently Read</option>
+                </select>
+                <div class="my-2 d-flex justify-content-center">
+                    <p-rating iconCancelClass="pi pi-times" class="custom-rate" [cancel]="true" [readonly]="false"
+                        (onCancel)="onCancledRating()" (onRate)="chooseRating($event)"></p-rating>
+                </div>
+            </div>
+        </div>
+        <div class="col-6  d-flex flex-column justify-content-center ">
+            <h4>Name : {{book.name}}</h4>
+            <a [routerLink]="['/authordetails',book.author_id._id]">
+                <h4>by :
+                    {{book.author_id.first_name}}
+                    {{book.author_id.last_name}}
+                </h4>
+            </a>
+            <a [routerLink]="['/cateogrydetails',book.category_id._id]">
+                <h4>cateogry : {{book.category_id.name}}</h4>
+            </a>
+            <h5> Rating:
+                {{ book.averageRate |number:'1.0-1'}}
+                <span> -</span>
+                {{book.numberOFrates}} ratings
+            </h5>
+            <div class="my-2">
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit($event)">
+                    <div class="row">
+                        <div class="col-6">
+                            <input formControlName="comment" type="text" name="comm" class="form-control"
+                            placeholder="Enter your comment...">
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="btn button ">submit</button>
+                        </div>
+                    </div>
+                  
+                  
+                </form>
+            </div>
+            <div *ngFor="let comm of comments">
+                <h1>{{comm}}</h1>
+            </div>
+        </div>
+    </div>

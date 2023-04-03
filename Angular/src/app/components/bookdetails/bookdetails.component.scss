@@ -1,0 +1,35 @@
+
+:host ::ng-deep 
+.p-rating-icon:not(.p-rating-cancel),
+:host ::ng-deep 
+.p-rating-icon:not(.p-rating-cancel):hover {
+color: #ac8167 !important;
+}
+:host ::ng-deep .custom-rate .p-rating-icon {
+    margin-top: 20px;
+   
+    font-size: 25px;
+}
+  
+:host ::ng-deep .custom-rate .p-rating-icon.p-rating-cancel,
+:host ::ng-deep .custom-rate .p-rating-icon.p-rating-cancel:hover{
+    color: #ac8167 !important;
+}
+a{
+    text-decoration: none;
+    color:  #311504;
+}
+div{
+   
+    color:  #311504;
+}
+.button{
+    background-color:#d2ba98;
+    color: #7e6339;
+
+}
+.button:hover{
+    background-color:#d2ba98;
+    color: #7e6339;
+
+}

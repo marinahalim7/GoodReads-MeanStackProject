@@ -1,0 +1,23 @@
+<div style="
+background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+<br><br><br><br>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div *ngFor="let cateogry of Cateogries">
+            <div class="col-md-12 my-4">
+                <a [routerLink]="['/cateogrydetails',cateogry._id]" class="btn btn-lg button my-3" >{{cateogry.name}}</a>
+                   <app-cateogrycursol [parentData]='cateogry._id'></app-cateogrycursol>
+            </div>
+            <div class="col-md-12 my-4">
+                <a [routerLink]="['/cateogrydetails',cateogry._id]" class="btn btn-lg button my-3">Action</a>
+                   <app-cateogrycursol [parentData]='cateogry._id'></app-cateogrycursol>
+            </div>
+            <div class="col-md-12 my-4">
+                <a [routerLink]="['/cateogrydetails',cateogry._id]" class="btn btn-lg button my-3">History</a>
+                   <app-cateogrycursol [parentData]='cateogry._id'></app-cateogrycursol>
+            </div>
+        </div>
+    </div>
+</div>

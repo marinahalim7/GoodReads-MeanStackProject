@@ -1,6 +1,53 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Alkatra&family=Arimo:wght@400;600&family=IBM+Plex+Sans+Arabic:wght@600&family=Inconsolata:wght@700&family=Kanit:wght@500&family=Lilita+One&family=Lobster&family=Pacifico&family=Paytone+One&display=swap');
 
 mat-grid-tile {
   background: lightblue;
 }
+.jumbotron {
+  background: url("../../../../assets/images/pexels-juan-pablo-serrano-arenas-877971.jpg") no-repeat center;
+}
+.btn-primary {
+  background-color: #c60063;
+  border-color: #c60063;
+}
+.btn-secondary {
+  background-color: transparent;
+  border-color: #c60063;
+  color: #c60063;
+}
 
+#contact {
+  background: url("../../../../assets/images/pexels-dayan-rodio-4132936.jpg") no-repeat center;
+}
+img:hover{
+  opacity: 0.8;
+  cursor:pointer;
+}
+.myFont{
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  color: rgb(210, 192, 172);
+  font-weight: 100;
+}
+.card{
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+  transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  padding: 14px 80px 18px 36px;
+  cursor: pointer;
+}
+
+.card:hover{
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.qoute
+{
+  font-family: 'Pacifico', cursive;
+  font-size: 20px;
+  font-style: italic;
+
+}

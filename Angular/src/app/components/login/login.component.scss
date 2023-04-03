@@ -1,0 +1,31 @@
+.containerr{
+    background-color: #64390749;
+    border-radius: 20px;
+}
+img{
+//object-fit:fill;
+    background-color: no-repeat;
+}
+
+#loginButton{
+    background-color: #925d21;
+    border: rgb(121, 78, 0);
+    box-shadow: white;
+    color: aliceblue;
+  //  height: 50px;
+   // width: 80px;
+    
+}
+
+#loginButton:active {
+    background-color: #a3850e;
+    
+}
+
+#loginButton:hover {
+    background-color: #9f7a0b;
+   
+}
+.textcolor{
+    color: aliceblue;
+}

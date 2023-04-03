@@ -1,8 +1,8 @@
-
 <div style="
 background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
-<br><br><br><br>
+    <br><br><br><br>
 </div>
+<!-- display cateogries -->
 <div class="card">
     <section class="intro">
         <div class="bg-image h-100" style="
@@ -19,11 +19,8 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
                                             'name',
                                             'country.name',
                                             'representative.name',
-                                            'status']"
-                                            [tableStyle]="{ 'min-width': '50rem' }"
-                                            [(selection)]="selectedcateogries"
-                                            [rowHover]="true"
-                                            dataKey="id"
+                                            'status']" [tableStyle]="{ 'min-width': '50rem' }"
+                                            [(selection)]="selectedcateogries" [rowHover]="true" dataKey="id"
                                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                                             [showCurrentPageReport]="true" class="table table-striped"
                                             style="background-color: #eed6c4">
@@ -60,9 +57,9 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
 
                                             <ng-template pTemplate="body" let-cateogry>
                                                 <tr style="background-color: #fff3e4">
-                                                        <td>{{ cateogry.name }}</td>
-                                                        <!-- button to update and delete -->
-                                                        <td>
+                                                    <td>{{ cateogry.name }}</td>
+                                                    <!-- button to update and delete -->
+                                                    <td>
                                                         <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editAuthor(author._id)"></button> -->
                                                         <button pButton pRipple icon="pi pi-pencil"
                                                             class="p-button-rounded p-button-success mr-2"
@@ -106,12 +103,9 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
     </ng-template>
 </p-dialog>
 
-
-
-
-
 <!-- add acateogry -->
-<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog"
+    [ngStyle]="{ display: displayStyle }">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -125,13 +119,14 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
                     </div>
                     <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
 
-                    <form [formGroup]="postCateogryDataForm" (ngSubmit)="submitpostCateogryDataForm(postCateogryDataForm)">
+                    <form [formGroup]="postCateogryDataForm"
+                        (ngSubmit)="submitpostCateogryDataForm(postCateogryDataForm)">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input formControlName="name" class="form-control" type="text" id="name" />
                             <div *ngIf="postCateogryDataForm.get('name')?.errors != null &&
                             postCateogryDataForm.get('name')?.touched
-                                "class="alert my-2 alert-danger">
+                                " class="alert my-2 alert-danger">
                                 <p *ngIf="postCateogryDataForm.get('name')?.errors?.['required']">
                                     name is required
                                 </p>
@@ -160,52 +155,51 @@ background-image: url(https://image.freepik.com/free-photo/bronze-pattern-backgr
 </div>
 
 
-<!-- ========================================================================== -->
 <!-- update author -->
-<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle2 }">
+<div class="modal" style="background-color: rgba(114, 102, 84, 0.484);" tabindex="-1" role="dialog"
+    [ngStyle]="{ display: displayStyle2 }">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" class="fs-2" class="fontHeaderPopup">Update cateogry</h4>
             </div>
             <div class="modal-body" style="background-color: #eed6c4;">
-                    <div class="w-75 m-auto py-5">
-                        <!-- alert from error response -->
-                        <div *ngIf="error" class="alert alert-primary">
-                            <p>{{ error }}</p>
-                        </div>
-                        <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
-                        <form [formGroup]="editcateogryDataForm" (ngSubmit)="
-                        submiteditCateogryDataForm(updatedCateogryId, editcateogryDataForm)">
-                            <div class="form-group">
-                                <label for="name" class="popupFont"> Name</label>
-                                <input formControlName="name" class="form-control" type="text" id="name" />
-                                <div *ngIf="editcateogryDataForm.get('name')?.errors != null && editcateogryDataForm.get('name')?.touched"class="alert my-2 alert-danger">
-                                    <p *ngIf="editcateogryDataForm.get('name')?.errors?.['required']">
-                                        name is required
-                                    </p>
-                                    <p *ngIf="editcateogryDataForm.get('name')?.errors?.['minlength']">
-                                        name is minlength 3
-                                    </p>
-                                    <p *ngIf="editcateogryDataForm.get('name')?.errors?.['maxlength']">
-                                        name is maxlength 10
-                                    </p>
-                                </div>
-                            </div>
-
-                            <button [disabled]="editcateogryDataForm.invalid" class="btn btn-success mt-3" type="submit">
-                                edit
-                            </button>
-                        </form>
+                <div class="w-75 m-auto py-5">
+                    <!-- alert from error response -->
+                    <div *ngIf="error" class="alert alert-primary">
+                        <p>{{ error }}</p>
                     </div>
+                    <!-- <h1>{{registerForm.get('username')?.errors | json}}</h1> -->
+                    <form [formGroup]="editcateogryDataForm" (ngSubmit)="
+                        submiteditCateogryDataForm(updatedCateogryId, editcateogryDataForm)">
+                        <div class="form-group">
+                            <label for="name" class="popupFont"> Name</label>
+                            <input formControlName="name" class="form-control" type="text" id="name" />
+                            <div *ngIf="editcateogryDataForm.get('name')?.errors != null && editcateogryDataForm.get('name')?.touched"
+                                class="alert my-2 alert-danger">
+                                <p *ngIf="editcateogryDataForm.get('name')?.errors?.['required']">
+                                    name is required
+                                </p>
+                                <p *ngIf="editcateogryDataForm.get('name')?.errors?.['minlength']">
+                                    name is minlength 3
+                                </p>
+                                <p *ngIf="editcateogryDataForm.get('name')?.errors?.['maxlength']">
+                                    name is maxlength 10
+                                </p>
+                            </div>
+                        </div>
+
+                        <button [disabled]="editcateogryDataForm.invalid" class="btn btn-success mt-3" type="submit">
+                            edit
+                        </button>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" (click)="closePopup2()">
-                        Close
-                    </button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" (click)="closePopup2()">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
 </div>
-
-

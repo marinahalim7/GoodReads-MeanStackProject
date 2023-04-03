@@ -26,7 +26,7 @@ export class AdminBooksService {
     return this._HttpClient.delete(`http://localhost:5000/admin/book/${id}`);
   }
     // update books
-    updateAdminBooks(id:any,editBookData:IBook):Observable<any>{
+    updateAdminBooks(id:any,editBookData:any):Observable<any>{
       console.log(id);
       console.log(editBookData);
       return this._HttpClient.put(`http://localhost:5000/admin/book/${id}`,editBookData)

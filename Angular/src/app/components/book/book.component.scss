@@ -1,0 +1,38 @@
+.basic-section {
+    height: auto;
+    border-radius: 1.563em;
+    /* border: 0.625em solid #1a0b02; */
+    background-size: contain;
+    text-align: center;
+    font-size: .813em;
+    background-color:#e4d2b8;
+    /* position: relative; */
+    box-shadow: 0 0 7px #d7ab79;
+    border: .400em solid #1a0b02;;
+
+
+}
+img {
+  width: 200px; /* You can set the dimensions to whatever you want */
+  height: 280px;
+  object-fit:contain;
+  object-position: top;
+  align-self: center;
+}
+
+  a {
+    letter-spacing: .1em;
+    transition: text-shadow .3s;
+    transition: opacity .3s;
+    text-decoration: none;
+    color:  #311504;
+  //  font-size: large;
+ 
+  }
+
+a:hover {
+    text-shadow: 0 0 .65px  #311504, 0 0 .65px #311504;
+    color:  #311504;
+    opacity:.7;
+  }
+  

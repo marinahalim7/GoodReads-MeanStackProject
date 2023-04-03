@@ -1,0 +1,36 @@
+.basic-section {
+    height: auto;
+    border-radius: 1.563em;
+    background-size:cover;
+    font-size: .813em;
+    background-color:#e4d2b8;
+    box-shadow: 0 0 7px #d7ab79;
+    border: .300em solid #1a0b02;
+}
+.authorimg {
+    object-fit:cover;
+   
+}
+.bookimg {
+    width: 150px;
+    height: 120px;
+    object-fit:fill;
+}
+
+
+:host ::ng-deep 
+.p-rating-icon:not(.p-rating-cancel),
+:host ::ng-deep 
+.p-rating-icon:not(.p-rating-cancel):hover {
+color: #ac8167 !important;
+}
+:host ::ng-deep .custom-rate .p-rating-icon {
+    margin-top: 20px;
+    margin-right: 0px;
+    font-size: 25px;
+}
+  
+:host ::ng-deep .custom-rate .p-rating-icon.p-rating-cancel,
+:host ::ng-deep .custom-rate .p-rating-icon.p-rating-cancel:hover{
+    color: #ac8167 !important;
+}

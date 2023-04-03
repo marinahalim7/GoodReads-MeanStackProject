@@ -1,0 +1,50 @@
+<div style="
+background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+    <br><br><br><br>
+</div>
+
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col">
+            <select #state (change)="selectBooks(state.value)" class="form-select">
+                <option value="all" selected>All Books</option>
+                <option value="Read">Read</option>
+                <option value="Want to Read">Want to Read</option>
+                <option value="currently Read">currently Read</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <section class="intro">
+        <div class="bg-image h-100" style="
+             background-image: url(https://image.freepik.com/free-photo/bronze-pattern-background_53876-71407.jpg);">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container justify-content-center">
+                    <div class="row">
+                        <div *ngIf="books.length==0">
+                            <h2 class="text-center">No matching items! !!</h2>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 my-2 justify-content-center" *ngFor="let book of books">
+                            <div class="card" style="width: 20rem;">
+                                <div class="card-body text-center">
+                                    <a [routerLink]='["/bookdetails",book.bookId]'>
+                                        <img [src]="book.bookimg" class="img-fluid card-img-top mt-2">
+                                        <h5 class="card-title text-center">
+                                            {{book.bookname}}
+                                        </h5>
+                                        <a [routerLink]="['/authordetails',book.author_Id]">
+                                            <span>{{book.author_FirstName}}</span>
+                                            <span>{{book.author_last_name}}</span>
+                                        </a>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

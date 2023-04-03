@@ -23,40 +23,48 @@ import { Location } from '@angular/common';
 })
 
 
-
 export class AdminAuthorsComponent implements OnInit {
-
+  selectedFile?:File;
   title = 'refreshPage';
   constructor(private _AdminAuthorsService: AdminAuthorsService, private messageService: MessageService, private confirmationService: ConfirmationService, public _Router: Router, public _location: Location, private _ActivatedRoute: ActivatedRoute) {
-
   }
+
   refresh(): void {
-    this._Router.navigateByUrl("/refresh", { skipLocationChange: true }).then(() => {
+    this._Router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
       console.log(decodeURI(this._location.path()));
 
       (<any>this._Router).navigate([decodeURI(this._location.path())]);
     });
   }
 
-  // logic of post author ////////////////////
+// post author
   authorNames: any[] = [];
   error: string = '';
   postAuthorDataForm = new FormGroup({
     first_name: new FormControl(null, [Validators.minLength(3), Validators.maxLength(10), Validators.required]),
     last_name: new FormControl(null, [Validators.minLength(3), Validators.maxLength(10), Validators.required]),
     Date_of_birth: new FormControl(null, [Validators.required]),
-    img: new FormControl(null, [Validators.required])
+    image: new FormControl(null, [Validators.required])
   })
 
 
-  // method to submit postAuthorDataForm
+// method to submit postAuthorDataForm
   submitpostAuthorDataForm(postAuthorDataForm: FormGroup) {
-    this._AdminAuthorsService.postAdminAuthors(postAuthorDataForm.value)
+    const formdata = new FormData();
+
+    formdata.append("first_name",postAuthorDataForm.controls['first_name'].value)
+    formdata.append("last_name",postAuthorDataForm.controls['last_name'].value)
+    formdata.append("Date_of_birth",postAuthorDataForm.controls['Date_of_birth'].value)
+
+     if(this.selectedFile){
+      formdata.append("image", this.selectedFile, this.selectedFile.name);
+
+     }
+    this._AdminAuthorsService.postAdminAuthors(formdata)
       .subscribe((response) => {
         if (response.first_name != null) {
           console.log("post author data success");
           this.refresh();
-          //this._Router.navigate([self]);
         }
         else {
           this.error = response.message;
@@ -66,11 +74,14 @@ export class AdminAuthorsComponent implements OnInit {
   }
 
 
+selectImgFun(e:any){
+console.log(e);
+this.selectedFile = e.target.files[0];
+}
 
-//////////////////////////////////////////////////////////
-  // method to delete data
+
+//delete data
   deleteAuthor(id: any) {
-
     console.log(id);
     this._AdminAuthorsService.deleteAdminAuthor(id).subscribe((response) => {
       if (response.first_name != null) {
@@ -84,26 +95,30 @@ export class AdminAuthorsComponent implements OnInit {
     })
   }
 
-/////////////////////////////////////////////////////
-  //method to update author
+// update author
   authorNamesupdate: any[] = [];
-
   editAuthorDataForm = new FormGroup({
     first_name: new FormControl(null, [Validators.minLength(3), Validators.maxLength(10), Validators.required]),
     last_name: new FormControl(null, [Validators.minLength(3), Validators.maxLength(10), Validators.required]),
     Date_of_birth: new FormControl(null, [Validators.required]),
-    img: new FormControl(null, [Validators.required])
+    image: new FormControl(null, [Validators.required])
   })
 
 
- // method to submit editAuthorDataForm
+ //submit editAuthorDataForm
+ selectedFileUpdate?:File;
  submiteditAuthorDataForm(id:any, editAuthorDataForm: FormGroup) {
-  this._AdminAuthorsService.updateAdminAuthors(id,editAuthorDataForm.value)
+  const formdataedit = new FormData();
+  formdataedit.append("first_name", editAuthorDataForm.controls['first_name'].value)
+  formdataedit.append("last_name", editAuthorDataForm.controls['last_name'].value)
+  formdataedit.append("Date_of_birth", editAuthorDataForm.controls['Date_of_birth'].value)
+
+if(this.selectedFileUpdate){
+  formdataedit.append("image",this.selectedFileUpdate, this.selectedFileUpdate.name);
+}
+  this._AdminAuthorsService.updateAdminAuthors(id,formdataedit)
     .subscribe((response) => {
-      this.authorNamesupdate = editAuthorDataForm.value;
-      console.log("test");
-      console.log(id);
-      console.log(editAuthorDataForm);
+      //this.authorNamesupdate = editAuthorDataForm.value;
       if (response.first_name != null) {
         console.log("edit author data success");
         this.refresh();
@@ -114,8 +129,12 @@ export class AdminAuthorsComponent implements OnInit {
       }
     })
 }
+selectImgFunedit(e:any){
+  console.log(e);
+  this.selectedFileUpdate = e.target.files[0];
+  }
 
- // logic of get author and it's dilaog message
+// get author and it's dilaog message
   authorDialog!: boolean;
   authors!: IAuthor[];
   author!: IAuthor;
@@ -185,7 +204,7 @@ export class AdminAuthorsComponent implements OnInit {
   displayStyle2 = "none";
 
 
-  // post popup
+// post popup
   openPopup() {
     this.displayStyle = "block";
 

@@ -19,23 +19,26 @@ import { RegisterComponent } from './components/user/register/register.component
 
 
 const routes: Routes = [
-   
-   {path:'AdminNavbar', component:AdminNavbarComponent},
-   {path:'AdminHome',canActivate:[AuthgardGuard], component:AdminHomeComponent},
-   {path:'AdminAuthors',canActivate:[AuthgardGuard], component:AdminAuthorsComponent},
-   {path:'AdminBooks',canActivate:[AuthgardGuard],component:AdminBooksComponent},
-   {path:'AdminCateogries',canActivate:[AuthgardGuard],component:AdminCateogriesComponent},
-   {path:'AdminLogin', component:AdminLoginComponent},
+  {path:'',redirectTo: 'AdminLogin', pathMatch: 'full'},
+  {path:'AdminNavbar', component:AdminNavbarComponent},
+  {path:'AdminHome',canActivate:[AuthgardGuard], component:AdminHomeComponent},
+  {path:'AdminAuthors',canActivate:[AuthgardGuard], component:AdminAuthorsComponent},
+  {path:'AdminBooks',canActivate:[AuthgardGuard],component:AdminBooksComponent},
+  {path:'AdminCateogries',canActivate:[AuthgardGuard],component:AdminCateogriesComponent},
+  {path:'AdminLogin', component:AdminLoginComponent},
+  {path:'AdminHome/AdminCateogries',component:AdminCateogriesComponent},
+  {path:'AdminHome/AdminBooks',component:AdminBooksComponent},
+  {path:'AdminHome/AdminAuthors',component:AdminAuthorsComponent},
 
-   {path:'',redirectTo: 'home', pathMatch: 'full'},
-  {path:'register/home',redirectTo: 'login', pathMatch: 'full'},
-  {path:'about',component: AboutComponent},
-  {path:'cateogories',component: CateogriesComponent},
-  {path:'home',canActivate:[AuthGuard],component: HomeComponent},
-  {path:'login',component: LoginComponent},
-  {path:'register',component: RegisterComponent},
-  {path:'**',component: NotFoundComponent},
-  {path:'logout',component: LogoutComponent},
+  //  {path:'',redirectTo: 'home', pathMatch: 'full'},
+  // {path:'register/home',redirectTo: 'login', pathMatch: 'full'},
+  // {path:'about',component: AboutComponent},
+  // {path:'cateogories',component: CateogriesComponent},
+  // {path:'home',canActivate:[AuthGuard],component: HomeComponent},
+  // {path:'login',component: LoginComponent},
+  // {path:'register',component: RegisterComponent},
+  // {path:'**',component: NotFoundComponent},
+  // {path:'logout',component: LogoutComponent},
 ];
 
 @NgModule({

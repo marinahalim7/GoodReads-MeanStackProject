@@ -7,9 +7,9 @@ router.post('/', async (req, res) => {
     try {
         const userId = req.body.user_id;
         const state = req.body.state;
-       
+       console.log(userId);
+       console.log(state);
         if(state == 'all'){
-            console.log("in alll");
             let allbook=[];
             const books=  await bookModel.find().populate({
                 path:"author_id",
@@ -41,8 +41,15 @@ router.post('/', async (req, res) => {
         }
         if(state == 'Read' )
         {
+            console.log('read');
             let readbook=[];
-            const books=  await bookModel.find();
+            const books=  await bookModel.find().populate({
+                path:"author_id",
+                select: {_id:1,first_name:1,last_name:1}
+            }).populate({
+                path:"category_id",
+                select: {name:1}
+            });
             for(let i=0;i<books.length;i++){
                 for(let y=0;y<books[i].reviews.length;y++)
                 {
@@ -62,13 +69,21 @@ router.post('/', async (req, res) => {
                     }
                 }
             } 
+            console.log(readbook);
              res.json(readbook);
 
         }
         if(state == 'Want to Read' )
         {
+            console.log('Want to read');
             let wantReadbook=[];
-            const books=  await bookModel.find();
+            const books=  await bookModel.find().populate({
+                path:"author_id",
+                select: {_id:1,first_name:1,last_name:1}
+            }).populate({
+                path:"category_id",
+                select: {name:1}
+            });
             for(let i=0;i<books.length;i++){
                 for(let y=0;y<books[i].reviews.length;y++)
                 {
@@ -93,7 +108,13 @@ router.post('/', async (req, res) => {
         if(state == 'currently Read' )
         {
             let currentReadbook=[];
-            const books=  await bookModel.find();
+            const books=  await bookModel.find().populate({
+                path:"author_id",
+                select: {_id:1,first_name:1,last_name:1}
+            }).populate({
+                path:"category_id",
+                select: {name:1}
+            });
             for(let i=0;i<books.length;i++){
                 for(let y=0;y<books[i].reviews.length;y++)
                 {
@@ -126,13 +147,13 @@ router.put('/:id', async (req, res) => {
     try {
         const id = req.params.id;  
         let reqt = {...req.body};
-       console.log(reqt);
+        console.log(reqt);
+      // console.log(reqt);
     //    console.log(id);
         const update = await userBookModel.findOne({ _id:id},{reviews:1,_id:0});
         var item = update.reviews.find(item => item.user_id == req.body.user_id); 
             console.log(item);
         if(item == undefined){
-            console.log("i undefined");
             update.reviews.addToSet(reqt);
             const newarr = await bookModel.findByIdAndUpdate(id,update);
             res.send(newarr);                    
@@ -141,34 +162,37 @@ router.put('/:id', async (req, res) => {
             {
                 if(!reqt.state){
                     reqt.state=item.state;
-                    console.log("i stateee");
+                  //  console.log("i stateee");
                 }
-  /*              if(!reqt.rate){
+               if(!reqt.rate){
                     reqt.rate=item.rate;
-                    console.log("i rateee");
+                //    console.log("i rateee");
                     
                 }
                 
                 
-            */    
-console.log(reqt);
+               
+               
                 if(reqt.comment == undefined){
-                    console.log("i comment");
-                    reqt.comment[0]=item.comment;
+                   // console.log("i comment");
+                    for(let i=0 ;i<item.comment.length;i++){
+                        reqt.comment[i]=item.comment[i];
+                    }
+                   
                 }
                 
                 if(reqt.comment)
                 {
-                    console.log("i comment");
+                    console.log("comment");
                     for(let i=0;i<item.comment.length;i++){
                         reqt.comment[i+1]=item.comment[i];
                     }
                 }     
                 update.reviews.remove(item);
-                console.log(update.reviews);
+              //  console.log(update.reviews);
 
                 update.reviews.addToSet(reqt);
-                console.log(update.reviews);
+              //  console.log(update.reviews);
                 const newarr =await bookModel.findByIdAndUpdate(id,update,{new:true});
                 res.send(newarr); 
             }
